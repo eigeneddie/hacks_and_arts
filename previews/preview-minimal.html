@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preview: Minimal Dark</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #111111;
+      --surface: #1c1c1c;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #e8e8e8;
+      --blue: #4f8ef7;
+      --border: #2e2e2e;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 3rem 2rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--blue); }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .site-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav { display: flex; gap: 1.5rem; }
+    nav a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--text); }
+
+    .hero { margin-bottom: 4rem; }
+
+    .hero h1 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 480px;
+    }
+
+    h2 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    section { margin-bottom: 3.5rem; }
+
+    .project-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .project-row:first-of-type { border-top: 1px solid var(--border); }
+
+    .project-row:hover .project-title { color: var(--blue); }
+
+    .project-left { display: flex; flex-direction: column; gap: 0.2rem; }
+
+    .project-title {
+      font-size: 0.9rem;
+      font-weight: 450;
+      transition: color 0.1s;
+    }
+
+    .project-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .project-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+    }
+
+    .tag.active { background: #1a2e1a; color: #5acd5a; }
+
+    .date { font-size: 0.8rem; color: var(--muted); }
+
+    .log-item {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .log-item:first-of-type { border-top: 1px solid var(--border); }
+
+    .log-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .log-title {
+      font-size: 0.9rem;
+      font-weight: 450;
+      margin-bottom: 0.3rem;
+    }
+
+    .log-body {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer {
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="site-name" href="#">Edgar Sutawika</a>
+    <nav>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Building robots with minimal resources.</h1>
+    <p>MechE by training, learning firmware and EE by building. These are personal projects I own — documented as I go.</p>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+
+    <div class="project-row">
+      <div class="project-left">
+        <span class="project-title">Form 2 Teardown</span>
+        <span class="project-subtitle">Reverse-engineering a broken SLA printer</span>
+      </div>
+      <div class="project-right">
+        <span class="tag active">In Progress</span>
+        <span class="date">Apr 2026</span>
+      </div>
+    </div>
+
+    <div class="project-row">
+      <div class="project-left">
+        <span class="project-title">Next Project</span>
+        <span class="project-subtitle">TBD — something constrained</span>
+      </div>
+      <div class="project-right">
+        <span class="tag">Planned</span>
+        <span class="date">—</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Latest Updates</h2>
+
+    <div class="log-item">
+      <p class="log-meta">Form 2 Teardown &nbsp;·&nbsp; Apr 25, 2026</p>
+      <p class="log-title">First look: initial disassembly</p>
+      <p class="log-body">Top cover off. Optical unit visible — two galvo mirrors, laser module, custom driver board. Z-axis on a leadscrew with a NEMA stepper.</p>
+    </div>
+
+    <div class="log-item">
+      <p class="log-meta">Form 2 Teardown &nbsp;·&nbsp; Apr 20, 2026</p>
+      <p class="log-title">Project started</p>
+      <p class="log-body">Got a broken Form 2 from my boss. Starting the teardown.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Edgar Sutawika</span>
+    <span>
+      <a href="#">GitHub</a> &nbsp;·&nbsp;
+      <a href="#">Email</a>
+    </span>
+  </footer>
+
+</body>
+</html>

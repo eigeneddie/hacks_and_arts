@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preview: Terminal Style</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --green: #39ff14;
+      --green-dim: #1a7a00;
+      --amber: #ffb300;
+      --text: #c8c8c8;
+      --muted: #555;
+      --border: #2a2a2a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 2rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .prompt { color: var(--green); }
+    .muted { color: var(--muted); }
+    .accent { color: var(--amber); }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    header .top-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-title {
+      color: var(--green);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    nav a:hover { color: var(--green); }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .section-label {
+      color: var(--green);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before { content: '# '; color: var(--green-dim); }
+
+    .intro {
+      margin-bottom: 3rem;
+    }
+
+    .intro p {
+      color: var(--text);
+      max-width: 600px;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-list { margin-bottom: 3rem; }
+
+    .project {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .project:hover { border-color: var(--green-dim); }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-name {
+      color: var(--green);
+      font-size: 0.95rem;
+    }
+
+    .project-name::before { content: '> '; color: var(--green-dim); }
+
+    .project-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .project-desc { font-size: 0.85rem; color: var(--text); }
+
+    .status {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid;
+      margin-top: 0.6rem;
+      letter-spacing: 0.1em;
+    }
+
+    .status.active { color: var(--green); border-color: var(--green-dim); }
+    .status.planned { color: var(--amber); border-color: #7a5500; }
+
+    .log-entry {
+      border-left: 2px solid var(--green-dim);
+      padding-left: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .log-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .log-date::before { content: '['; }
+    .log-date::after { content: ']'; }
+
+    .log-title {
+      color: var(--green);
+      margin-bottom: 0.3rem;
+    }
+
+    .log-body { font-size: 0.875rem; }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--green);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="top-line">
+      <span class="site-title">edgar@hacks_and_arts:~$<span class="cursor"></span></span>
+      <nav>
+        <a href="#">projects</a>
+        <a href="#">about</a>
+        <a href="#">github</a>
+      </nav>
+    </div>
+    <p class="tagline">// impressive things. minimal resources.</p>
+  </header>
+
+  <section class="intro">
+    <p class="section-label">about</p>
+    <p>MechE by training. Learning firmware and EE by building.</p>
+    <p>Documenting personal robotics projects — things I own, outside the startup.</p>
+  </section>
+
+  <section class="project-list">
+    <p class="section-label">projects</p>
+
+    <div class="project">
+      <div class="project-header">
+        <span class="project-name">form2-teardown</span>
+        <span class="project-meta">2026-04</span>
+      </div>
+      <p class="project-desc">Reverse-engineering a broken Formlabs Form 2 SLA printer. Galvos, laser driver, Z-axis, peel mechanism.</p>
+      <span class="status active">IN PROGRESS</span>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <span class="project-name">next-project</span>
+        <span class="project-meta">TBD</span>
+      </div>
+      <p class="project-desc">TBD — something constrained.</p>
+      <span class="status planned">PLANNED</span>
+    </div>
+  </section>
+
+  <section class="log">
+    <p class="section-label">latest log — form2-teardown</p>
+
+    <div class="log-entry">
+      <p class="log-date">2026-04-25</p>
+      <p class="log-title">first look: got the unit, initial disassembly</p>
+      <p class="log-body">Boss handed over a broken Form 2. Top cover off. Optical unit visible — two galvanometer mirrors, laser module, and what looks like a custom driver board. Z-axis uses a leadscrew with a NEMA stepper.</p>
+    </div>
+
+    <div class="log-entry">
+      <p class="log-date">2026-04-20</p>
+      <p class="log-title">project started</p>
+      <p class="log-body">Decided to document teardowns and personal builds. Starting with the Form 2.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>edgar sutawika</span>
+    <span>
+      <a href="#">github</a> &nbsp;/&nbsp;
+      <a href="#">email</a>
+    </span>
+  </footer>
+
+</body>
+</html>

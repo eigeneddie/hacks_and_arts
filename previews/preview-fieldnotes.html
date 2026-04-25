@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preview: Field Notes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #161614;
+      --surface: #1f1f1c;
+      --text: #d4d0c8;
+      --muted: #706c60;
+      --accent: #c8a96e;
+      --accent-dim: #5a4a28;
+      --red: #c0392b;
+      --green: #5aad72;
+      --border: #2a2a26;
+      --mono: 'Courier New', Courier, monospace;
+      --sans: Georgia, 'Times New Roman', serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.75;
+      padding: 2.5rem 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-name {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    nav a { color: var(--muted); margin-left: 1.25rem; }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    .header-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .section-header {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-header::after {
+      content: '';
+      display: block;
+      height: 1px;
+      flex: 1;
+      background: var(--border);
+    }
+
+    section { margin-bottom: 3rem; }
+
+    .intro-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .intro-meta {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-dim);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card.active { border-left-color: var(--accent); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: normal;
+      color: var(--text);
+    }
+
+    .card-meta {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid;
+    }
+
+    .badge.active { color: var(--green); border-color: #2a5a38; }
+    .badge.planned { color: var(--accent); border-color: var(--accent-dim); }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-tags {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .card-tags span {
+      margin-right: 0.75rem;
+    }
+
+    .card-tags span::before { content: '#'; color: var(--accent-dim); }
+
+    .log-block {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .log-block:first-of-type { border-top: 1px solid var(--border); }
+
+    .log-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .log-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .log-project {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .log-title {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .log-body {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-top">
+      <span class="site-name">hacks &amp; arts</span>
+      <nav>
+        <a href="#">projects</a>
+        <a href="#">log</a>
+        <a href="#">about</a>
+      </nav>
+    </div>
+    <p class="header-sub">Edgar Sutawika — robotics / firmware / EE &nbsp;·&nbsp; personal lab notes</p>
+  </header>
+
+  <section>
+    <p class="intro-text">MechE by training. Learning firmware and EE by building things I own. Documenting the process — no polish, just work.</p>
+    <p class="intro-meta">Philosophy: impressive output, minimal hardware.</p>
+  </section>
+
+  <section>
+    <p class="section-header">Projects</p>
+
+    <div class="project-card active">
+      <div class="card-top">
+        <span class="card-title">Form 2 Teardown</span>
+        <div class="card-meta">
+          <span class="badge active">IN PROGRESS</span>
+          <span>Apr 2026</span>
+        </div>
+      </div>
+      <p class="card-desc">Reverse-engineering a broken Formlabs Form 2 SLA printer. Galvo mirrors, laser driver, Z-axis control, peel mechanism. Goal: understand every subsystem, then repurpose the interesting bits.</p>
+      <div class="card-tags">
+        <span>teardown</span>
+        <span>SLA</span>
+        <span>galvanometer</span>
+        <span>reverse-engineering</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <span class="card-title">Next Project</span>
+        <div class="card-meta">
+          <span class="badge planned">PLANNED</span>
+          <span>TBD</span>
+        </div>
+      </div>
+      <p class="card-desc">TBD — something constrained. Probably bare-metal firmware on minimal hardware.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-header">Field Log</p>
+
+    <div class="log-block">
+      <div class="log-header">
+        <span class="log-date">2026-04-25</span>
+        <span class="log-project">form2-teardown</span>
+      </div>
+      <p class="log-title">First look: initial disassembly</p>
+      <p class="log-body">Top cover removed. Optical unit visible — two galvanometer mirrors mounted on a steel frame, laser module with collimating lens, and a custom PCB that I'm guessing is the galvo driver. Z-axis uses a leadscrew driven by a NEMA 17 stepper. Peel motor is separate, sits below the tank.</p>
+    </div>
+
+    <div class="log-block">
+      <div class="log-header">
+        <span class="log-date">2026-04-20</span>
+        <span class="log-project">form2-teardown</span>
+      </div>
+      <p class="log-title">Project started</p>
+      <p class="log-body">Boss handed over a broken Form 2. No guilt about full disassembly. Starting with the teardown, documenting as I go.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>edgar sutawika · 2026</span>
+    <span>
+      <a href="#">github</a> &nbsp;/&nbsp;
+      <a href="#">email</a>
+    </span>
+  </footer>
+
+</body>
+</html>

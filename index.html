@@ -1,13 +1,79 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Your Site</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>Hello world</h1>
-    <p>Deployed with GitHub Pages.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hacks & arts — Edgar Sutawika</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <span class="logo">hacks<span>&amp;</span>arts</span>
+    <nav>
+      <a href="#">projects</a>
+      <a href="#">log</a>
+      <a href="#">about</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Building robots with minimal resources.</h1>
+    <p>MechE by training. Learning firmware and EE by building. Personal projects, documented as I go.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Projects</p>
+
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">Form 2 Teardown</span>
+        <span class="project-status">IN PROGRESS</span>
+      </div>
+      <p class="project-desc">Reverse-engineering a broken Formlabs Form 2 SLA printer. Galvo mirrors, laser driver, Z-axis, peel mechanism.</p>
+      <div class="project-tags">
+        <span>teardown</span>
+        <span>SLA</span>
+        <span>galvanometer</span>
+        <span>reverse-eng</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">Next Project</span>
+        <span class="project-status planned">PLANNED</span>
+      </div>
+      <p class="project-desc">TBD — something constrained. Bare-metal firmware on minimal hardware.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Field Log</p>
+
+    <div class="log-entry">
+      <div class="log-meta">
+        <span class="date">2026-04-25</span>
+        <span>form2-teardown</span>
+      </div>
+      <p class="log-title">First look: initial disassembly</p>
+      <p class="log-body">Top cover off. Two galvo mirrors on a steel frame, laser module with collimating lens, custom driver board. Z-axis on a leadscrew with a NEMA 17. Peel motor sits below the resin tank.</p>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-meta">
+        <span class="date">2026-04-20</span>
+        <span>form2-teardown</span>
+      </div>
+      <p class="log-title">Project started</p>
+      <p class="log-body">Got a broken Form 2 from my boss. Starting the teardown and documenting everything.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>edgar sutawika</span>
+    <span><a href="#">github</a> · <a href="#">email</a></span>
+  </footer>
+
+</body>
 </html>
