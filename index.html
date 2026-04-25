@@ -1,37 +1,76 @@
 <!doctype html>
+<!-- Tells the browser this is an HTML5 document -->
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>hacks & arts — Edgar Sutawika</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+<!-- lang="en" helps screen readers and search engines know the language -->
 
+<head>
+  <!-- Everything in <head> is metadata — not visible on the page -->
+
+  <meta charset="utf-8" />
+  <!-- utf-8 lets you use special characters like &, é, → without breaking -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Makes the page scale correctly on mobile. Without this, phones zoom out and show a tiny desktop view -->
+
+  <title>hacks & arts — Edgar Sutawika</title>
+  <!-- Text shown in the browser tab -->
+
+  <link rel="stylesheet" href="style.css" />
+  <!-- Loads the CSS file that controls all the visual styling -->
+</head>
+
+<body>
+  <!-- Everything in <body> is what the user actually sees -->
+
+  <!-- ── HEADER ───────────────────────────────────────────────────── -->
   <header>
+    <!-- The top bar: logo on the left, nav links on the right -->
+
     <span class="logo">hacks<span>&amp;</span>arts</span>
+    <!-- class="logo" tells CSS to style this as the site name -->
+    <!-- &amp; is the HTML way to write & safely (raw & can confuse the parser) -->
+    <!-- The inner <span> wraps just the & so CSS can color it differently -->
+
     <nav>
+      <!-- <nav> marks a navigation block — semantic, helps accessibility -->
       <a href="#">projects</a>
       <a href="#">log</a>
       <a href="#">about</a>
+      <!-- href="#" is a placeholder link — replace # with the real URL or page path later -->
     </nav>
   </header>
 
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
   <section class="hero">
+    <!-- The intro section at the top of the page -->
+
     <h1>Building robots with minimal resources.</h1>
+    <!-- h1 = the most important heading on the page. Only use one per page -->
+
     <p>MechE by training. Learning firmware and EE by building. Personal projects, documented as I go.</p>
+    <!-- <p> = paragraph. Plain body text -->
   </section>
 
+  <!-- ── PROJECTS ──────────────────────────────────────────────────── -->
   <section>
     <p class="section-label">Projects</p>
+    <!-- Small uppercase label above the section. Styled via .section-label in CSS -->
 
+    <!-- Each project is a <div> — a generic container with no built-in meaning.
+         class="project" tells CSS how to style it (border, padding, etc.) -->
     <div class="project">
+
       <div class="project-top">
+        <!-- Row inside the card: project name on the left, status badge on the right -->
         <span class="project-name">Form 2 Teardown</span>
         <span class="project-status">IN PROGRESS</span>
+        <!-- class="project-status" styles the badge. No extra class = active/teal style -->
       </div>
+
       <p class="project-desc">Reverse-engineering a broken Formlabs Form 2 SLA printer. Galvo mirrors, laser driver, Z-axis, peel mechanism.</p>
+
       <div class="project-tags">
+        <!-- Row of keyword tags. Each <span> is one tag -->
         <span>teardown</span>
         <span>SLA</span>
         <span>galvanometer</span>
@@ -43,19 +82,29 @@
       <div class="project-top">
         <span class="project-name">Next Project</span>
         <span class="project-status planned">PLANNED</span>
+        <!-- Adding class "planned" on top of "project-status" switches it to a muted grey style -->
       </div>
       <p class="project-desc">TBD — something constrained. Bare-metal firmware on minimal hardware.</p>
     </div>
+
   </section>
 
+  <!-- ── FIELD LOG ─────────────────────────────────────────────────── -->
   <section>
     <p class="section-label">Field Log</p>
+    <!-- Chronological updates — newest first -->
 
     <div class="log-entry">
+      <!-- One log post. Add a new <div class="log-entry"> block for each update -->
+
       <div class="log-meta">
+        <!-- The metadata row: date + project name, in monospace -->
         <span class="date">2026-04-25</span>
+        <!-- class="date" turns this teal in CSS -->
         <span>form2-teardown</span>
+        <!-- Which project this update belongs to -->
       </div>
+
       <p class="log-title">First look: initial disassembly</p>
       <p class="log-body">Top cover off. Two galvo mirrors on a steel frame, laser module with collimating lens, custom driver board. Z-axis on a leadscrew with a NEMA 17. Peel motor sits below the resin tank.</p>
     </div>
@@ -66,13 +115,18 @@
         <span>form2-teardown</span>
       </div>
       <p class="log-title">Project started</p>
-      <p class="log-body">Got a broken Form 2 from my boss. Starting the teardown and documenting everything.</p>
+      <p class="log-body">Starting the teardown and documenting everything.</p>
     </div>
+
   </section>
 
+  <!-- ── FOOTER ────────────────────────────────────────────────────── -->
   <footer>
     <span>edgar sutawika</span>
-    <span><a href="#">github</a> · <a href="#">email</a></span>
+    <span>
+      <a href="#">github</a> · <a href="#">email</a>
+      <!-- Replace # with your actual GitHub URL and mailto: link when ready -->
+    </span>
   </footer>
 
 </body>

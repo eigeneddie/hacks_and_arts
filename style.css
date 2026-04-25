@@ -1,38 +1,55 @@
+/* ── RESET ───────────────────────────────────────────────────────────
+   Browsers add default margin/padding to elements. This clears all of
+   that so we start from zero and control everything ourselves.        */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+/* box-sizing: border-box means padding/border are included in the element's
+   width — makes layout math much more predictable                     */
 
+/* ── COLOR VARIABLES ─────────────────────────────────────────────────
+   CSS variables (custom properties) let you define colors once and
+   reuse them everywhere. Change a value here and it updates the whole site. */
 :root {
-  --bg: #13171a;
-  --surface: #1c2226;
-  --text: #dde3e8;
-  --muted: #6b7a85;
-  --accent: #3ecfcf;
-  --accent-dim: #1a4f4f;
-  --border: #252d33;
+  --bg: #13171a;         /* main page background — dark blue-grey       */
+  --surface: #1c2226;    /* slightly lighter, used for tag backgrounds   */
+  --text: #dde3e8;       /* main body text — off-white, easier on eyes   */
+  --muted: #6b7a85;      /* secondary text — descriptions, dates, labels */
+  --accent: #3ecfcf;     /* teal — used for highlights, links, badges    */
+  --accent-dim: #1a4f4f; /* darker teal — used for borders on hover      */
+  --border: #252d33;     /* subtle divider lines between elements        */
 }
 
+/* ── BODY ────────────────────────────────────────────────────────────
+   Base styles applied to the entire page                              */
 body {
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  /* Font stack: tries Inter first, falls back to the OS default sans-serif */
   font-size: 15px;
-  line-height: 1.7;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem;
+  line-height: 1.7;      /* space between lines — 1.7 = comfortable reading */
+  max-width: 700px;      /* content never stretches wider than 700px     */
+  margin: 0 auto;        /* centers the content horizontally on wide screens */
+  padding: 2.5rem 1.5rem;/* 2.5rem top/bottom, 1.5rem left/right breathing room */
 }
 
+/* ── MONOSPACE ───────────────────────────────────────────────────────
+   Applied to <code> tags and anything with class="mono".
+   Used for dates, tags, section labels — the "technical data" parts   */
 code, .mono {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.85em;
+  font-size: 0.85em;     /* slightly smaller than surrounding text      */
 }
 
+/* ── LINKS ───────────────────────────────────────────────────────────  */
 a { color: var(--accent); text-decoration: none; }
+/* Remove the default underline; we add it back on hover only          */
 a:hover { text-decoration: underline; }
 
+/* ── HEADER ──────────────────────────────────────────────────────────  */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex;                  /* puts children side by side          */
+  justify-content: space-between; /* pushes logo left, nav right         */
+  align-items: center;            /* vertically centers both             */
   margin-bottom: 3.5rem;
 }
 
@@ -40,35 +57,42 @@ header {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.01em; /* tighten the letters slightly             */
 }
 
 .logo span { color: var(--accent); }
+/* Colors just the & inside the logo teal                              */
 
 nav { display: flex; gap: 1.5rem; }
+/* Puts nav links in a row with space between them                     */
+
 nav a { font-size: 0.85rem; color: var(--muted); }
 nav a:hover { color: var(--text); text-decoration: none; }
+/* Nav links are grey by default, white on hover — no underline        */
 
+/* ── HERO ────────────────────────────────────────────────────────────  */
 .hero { margin-bottom: 3.5rem; }
 
 .hero h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em;  /* tight heading — common in modern design  */
   margin-bottom: 0.75rem;
-  line-height: 1.3;
+  line-height: 1.3;          /* tighter line-height for headings         */
 }
 
 .hero p {
   color: var(--muted);
-  max-width: 500px;
+  max-width: 500px;  /* keeps the tagline from stretching too wide      */
   font-size: 0.95rem;
 }
 
+/* ── SECTION LABEL ───────────────────────────────────────────────────
+   The small uppercase label above each section (PROJECTS, FIELD LOG) */
 .section-label {
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.12em;    /* wide spacing makes small caps readable  */
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 1.25rem;
@@ -77,18 +101,20 @@ nav a:hover { color: var(--text); text-decoration: none; }
 
 section { margin-bottom: 3rem; }
 
+/* ── PROJECT CARDS ───────────────────────────────────────────────────  */
 .project {
-  border: 1px solid var(--border);
+  border: 1px solid var(--border);  /* thin outline box                 */
   padding: 1.25rem;
   margin-bottom: 0.75rem;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s;   /* smooth color change on hover     */
 }
 
 .project:hover { border-color: var(--accent-dim); cursor: pointer; }
+/* On hover: border turns darker teal, cursor becomes a hand           */
 
 .project-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* name on left, status badge on right */
   align-items: flex-start;
   margin-bottom: 0.5rem;
 }
@@ -100,11 +126,12 @@ section { margin-bottom: 3rem; }
   font-family: 'Courier New', monospace;
   letter-spacing: 0.08em;
   padding: 0.2rem 0.5rem;
-  border: 1px solid var(--accent-dim);
-  color: var(--accent);
+  border: 1px solid var(--accent-dim); /* teal outline box              */
+  color: var(--accent);                /* teal text                     */
 }
 
 .project-status.planned {
+  /* When the badge also has class "planned", override to grey          */
   border-color: #333;
   color: var(--muted);
 }
@@ -119,22 +146,24 @@ section { margin-bottom: 3rem; }
   font-family: 'Courier New', monospace;
   font-size: 0.72rem;
   color: var(--muted);
-  display: flex;
-  flex-wrap: wrap;
+  display: flex;       /* puts tags in a row                            */
+  flex-wrap: wrap;     /* wraps to next line if too many tags            */
   gap: 0.5rem;
 }
 
 .project-tags span {
-  background: var(--surface);
+  background: var(--surface); /* slightly lighter box behind each tag   */
   padding: 0.1rem 0.4rem;
 }
 
+/* ── FIELD LOG ───────────────────────────────────────────────────────  */
 .log-entry {
   padding: 1.25rem 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border); /* divider line below each entry */
 }
 
 .log-entry:first-of-type { border-top: 1px solid var(--border); }
+/* Add a top border only to the first entry, so the list is fully boxed */
 
 .log-meta {
   font-family: 'Courier New', monospace;
@@ -142,10 +171,10 @@ section { margin-bottom: 3rem; }
   color: var(--muted);
   margin-bottom: 0.4rem;
   display: flex;
-  gap: 1rem;
+  gap: 1rem; /* space between date and project name                    */
 }
 
-.log-meta .date { color: var(--accent); }
+.log-meta .date { color: var(--accent); } /* date is teal              */
 
 .log-title {
   font-size: 0.95rem;
@@ -155,12 +184,13 @@ section { margin-bottom: 3rem; }
 
 .log-body { font-size: 0.875rem; color: var(--muted); }
 
+/* ── FOOTER ──────────────────────────────────────────────────────────  */
 footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* name on left, links on right       */
   font-size: 0.8rem;
   color: var(--muted);
   font-family: 'Courier New', monospace;
