@@ -1,3 +1,8 @@
+---
+# The two dashed lines above and below tell GitHub Pages (Jekyll) to process
+# this page, so it fills in the text from the _includes/ folder.
+# Keep them as the very first lines of the file.
+---
 <!doctype html>
 <html lang="en">
 
@@ -23,15 +28,41 @@
   </header>
 
   <!-- ── ABOUT ────────────────────────────────────────────────────── -->
-  <!-- Everything in here is a first draft. Rewrite it in your own words. -->
-  <section class="about">
-    <div class="about-intro">
-      <!-- Text on the left, photo on the right. On phones they stack.
-           Layout is in style.css under .about-intro -->
+  <!-- Same layout idea as 3blue1brown.com/about:
+       first what this site is, then a section about the author.
+       THE TEXT ISN'T IN THIS FILE. Edit it in Markdown:
+         _includes/about.md   → the About band
+         _includes/author.md  → the Author band (under your name)
+       The "capture / include / markdownify" lines below pull those files in
+       and convert them to HTML.
+       That happens on GitHub, so it only shows on the live site, not when
+       you open this file directly on your computer. -->
+  <!-- Each part of the page is a "band": a full-width strip with a faint
+       tinted background and a centered heading. Colors are set in
+       style.css (--band-about and --band-author at the top). -->
+
+  <!-- ── WHAT THIS SITE IS ── -->
+  <section class="about band band-about">
+    <h1 class="band-title">About</h1>
+
+    {% capture text %}{% include about.md %}{% endcapture %}
+    {{ text | markdownify }}
+  </section>
+
+  <!-- ── AUTHOR ── -->
+  <section class="about band band-author">
+    <h2 class="band-title">Author</h2>
+
+    <div class="author">
+      <!-- Photo on the left, name + icons + bio on the right. On phones they stack.
+           Layout is in style.css under .author -->
+      <img class="about-photo" src="images/about-pic.jpg"
+           alt="Edgar taking a selfie on a factory floor, in front of pallets of boxed products" />
+
       <div>
-        <div class="about-title">
-          <!-- The heading and contact icons share one row -->
-          <h1>About</h1>
+        <div class="author-head">
+          <!-- Your name and the contact icons share one row -->
+          <h3>Edgar Sutawika</h3>
           <div class="contact">
             <!-- Each icon is a link wrapping a small drawing (<svg>).
                  aria-label = the name screen readers read out (there's no visible text)
@@ -45,15 +76,11 @@
           </div>
         </div>
 
-        <p>I'm Edgar, a mechanical engineer by training, amateur street fighter at Fenway by Friday nights.</p>
-
-        <p><span class="brand">eigeneddie<span class="accent">::</span>blog</span> is my independent R&amp;D notebook. I pick something I want to understand, whether that's a machine to tear down, a circuit to build or an idea to test, and write up what I find. That includes the parts that didn't work.</p>
-        <!-- <strong> makes text bold and tells screen readers it's important -->
+        {% capture text %}{% include author.md %}{% endcapture %}
+        {{ text | markdownify }}
       </div>
-
-      <img class="about-photo" src="images/about-pic.jpg"
-           alt="Edgar taking a selfie on a factory floor, in front of pallets of boxed products" />
     </div>
+
   </section>
 
   <!-- ── FOOTER ────────────────────────────────────────────────────── -->

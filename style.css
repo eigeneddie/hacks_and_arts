@@ -16,6 +16,12 @@
   --accent: #3ecfcf;     /* teal — used for highlights, links, badges    */
   --accent-dim: #1a4f4f; /* darker teal — used for borders on hover      */
   --border: #252d33;     /* subtle divider lines between elements        */
+
+  /* Background tints for the shaded bands on the about page.
+     rgba(red, green, blue, opacity): the last number is how strong the
+     tint is (0 = invisible, 1 = solid). Small numbers keep it subtle.  */
+  --band-about: rgba(62, 207, 207, 0.07);  /* faint teal               */
+  --band-author: #1a2024;                  /* slightly lighter slate    */
 }
 
 /* ── BODY ────────────────────────────────────────────────────────────
@@ -244,27 +250,58 @@ section { margin-bottom: 3rem; }
 
 .about p { margin-bottom: 1rem; }  /* space between paragraphs            */
 
-/* Heading row: "About" on the left, contact icons on the right */
-.about-title {
+/* ── Shaded bands ──
+   Each band's background stretches to the edges of the window, even
+   though the text stays in the 700px column. The trick: a giant shadow
+   in the same color spreads the background sideways (box-shadow), and
+   clip-path trims it so it only spreads left and right, not up/down.  */
+.band {
+  padding: 2.75rem 0;
+  margin-bottom: 1.5rem;        /* gap between bands                    */
+  box-shadow: 0 0 0 100vmax var(--band-color);
+  clip-path: inset(0 -100vmax);
+  background: var(--band-color);
+}
+
+.band-about  { --band-color: var(--band-about); }
+.band-author { --band-color: var(--band-author); }
+
+/* Centered heading at the top of each band */
+.about .band-title {
+  text-align: center;
+  font-family: inherit;         /* undo the monospace label style       */
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--text);
+  margin: 0 0 1.5rem;
+}
+
+.band > p:last-child { margin-bottom: 0; } /* no extra gap at the bottom */
+
+/* ── Author section ── */
+/* Photo on the left, text on the right */
+.author {
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;  /* photo lines up with the top of the text  */
+}
+
+/* Name on the left, contact icons on the right, on one row */
+.author-head {
   display: flex;
   align-items: center;
   justify-content: space-between; /* pushes them to opposite ends      */
   flex-wrap: wrap;                /* icons drop below if there's no room */
   gap: 0.5rem 1.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
-.about-title h1 { margin-bottom: 0; } /* the row handles the spacing now */
-
-/* Intro block: text on the left, photo on the right */
-.about-intro {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;  /* photo lines up with the top of the text  */
-}
+.author-head h3 { font-size: 1.1rem; font-weight: 600; }
 
 .about-photo {
-  width: 190px;
+  width: 170px;
   flex-shrink: 0;           /* don't let the text squeeze the photo     */
   aspect-ratio: 4 / 5;      /* portrait shape                           */
   object-fit: cover;        /* crop to fill that shape, never squash    */
@@ -274,8 +311,20 @@ section { margin-bottom: 3rem; }
 
 /* Phones: stack the photo above the text instead of beside it */
 @media (max-width: 560px) {
-  .about-intro { flex-direction: column-reverse; gap: 1.5rem; }
-  .about-photo { width: 160px; }
+  .author { flex-direction: column; gap: 1.25rem; }
+  .about-photo { width: 150px; }
+}
+
+/* ── PLACEHOLDER BOXES ───────────────────────────────────────────────
+   <p class="todo"> marks a spot that still needs writing. Dashed box,
+   grey text, so it's obvious on the page. Remove class="todo" once
+   you've written the real text.                                       */
+.todo {
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  border: 1px dashed var(--border);
+  padding: 0.75rem 1rem;
 }
 
 /* ── FOOTER ──────────────────────────────────────────────────────────  */

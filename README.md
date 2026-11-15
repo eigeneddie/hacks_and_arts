@@ -13,7 +13,9 @@ Live at: [eigeneddie.com](https://eigeneddie.com)
 
 ## Stack
 
-Plain HTML + CSS. No framework, no build step, no dependencies. Hosted on GitHub Pages.
+Plain HTML + CSS, hosted on GitHub Pages. No framework, no dependencies.
+
+The one exception: the About page text is written in Markdown (`_includes/about.md`, `_includes/author.md`). GitHub Pages runs Jekyll on every push, and Jekyll pastes that text into `about.html`. Because of that, opening `about.html` straight from disk shows the raw Jekyll "include" lines instead of the text. (Don't write Jekyll's curly-brace-percent tags in this README: Jekyll processes it too, and a stray tag breaks the build.) Check the live site, or use VS Code's Markdown preview (Ctrl+Shift+V) on the `.md` file.
 
 ## Files
 
@@ -21,7 +23,8 @@ Plain HTML + CSS. No framework, no build step, no dependencies. Hosted on GitHub
 index.html         home page (Posts list is auto-filled from Substack)
 posts/             full post pages, generated from Substack
 posts.json         record of every post, used to build the above
-about.html         about page
+about.html         about page (layout only)
+_includes/         about.md, author.md: the About page text, in Markdown
 style.css          all styling, shared by both pages
 images/banner.jpg  banner photo (resized for the web, ~190 KB)
 scripts/           update_posts.py: pulls posts from Substack into index.html
