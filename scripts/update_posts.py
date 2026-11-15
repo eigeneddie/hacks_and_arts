@@ -144,9 +144,6 @@ def render_post_page(p):
 
   <footer>
     <span>edgar sutawika</span>
-    <span>
-      <a href="https://github.com/eigeneddie">github</a> · <a href="#">email</a>
-    </span>
   </footer>
 
 </body>

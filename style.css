@@ -45,11 +45,33 @@ a { color: var(--accent); text-decoration: none; }
 /* Remove the default underline; we add it back on hover only          */
 a:hover { text-decoration: underline; }
 
+/* ── ACCENT ──────────────────────────────────────────────────────────
+   Wrap any text in <span class="accent">...</span> to color it teal,
+   like the :: in eigeneddie::blog                                     */
+.accent { color: var(--accent); }
+
+/* ── BRAND NAME IN TEXT ──────────────────────────────────────────────
+   Makes eigeneddie::blog inside a paragraph look like a code snippet:
+   same font as the logo, on a slightly lighter box.
+   Use: <span class="brand">eigeneddie<span class="accent">::</span>blog</span> */
+.brand {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 0.92em;              /* monospace looks bigger, so shrink a bit */
+  background: var(--surface);     /* the lighter box behind the text       */
+  border: 1px solid var(--border);
+  border-radius: 3px;             /* slightly rounded corners              */
+  padding: 0.1em 0.4em;           /* breathing room inside the box         */
+  white-space: nowrap;            /* never split the name across two lines */
+}
+
 /* ── HEADER ──────────────────────────────────────────────────────────  */
 header {
   display: flex;                  /* puts children side by side          */
-  justify-content: space-between; /* pushes logo left, nav right         */
-  align-items: center;            /* vertically centers both             */
+  align-items: center;            /* vertically centers them             */
+  flex-wrap: wrap;                /* on very narrow screens, the nav drops
+                                     to a second line instead of squishing */
+  gap: 0.75rem 1.5rem;            /* space between items: rows, columns  */
   margin-bottom: 3.5rem;
 }
 
@@ -59,6 +81,8 @@ header {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
+  margin-right: auto;      /* takes up all the spare space on its right,
+                              which pushes the nav and icons to the right */
 }
 
 .logo:hover { text-decoration: none; }
@@ -75,6 +99,28 @@ nav a:hover { color: var(--text); text-decoration: none; }
 /* Nav links are grey by default, white on hover — no underline        */
 
 nav a.active { color: var(--text); }
+
+/* ── CONTACT ICONS (about page, next to the heading) ──────────────── */
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.contact a { color: var(--muted); display: flex; }
+.contact a:hover { color: var(--accent); }  /* grey, teal on hover        */
+
+.contact svg {
+  width: 17px;
+  height: 17px;
+  /* The icons are line drawings. These make the lines use the link's
+     color (currentColor), so the hover color change works on them too */
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 /* The link for the page you're on stays white                         */
 
 /* ── BANNER ──────────────────────────────────────────────────────────
@@ -191,6 +237,40 @@ section { margin-bottom: 3rem; }
 }
 
 .about p { margin-bottom: 1rem; }  /* space between paragraphs            */
+
+/* Heading row: "About" on the left, contact icons on the right */
+.about-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* pushes them to opposite ends      */
+  flex-wrap: wrap;                /* icons drop below if there's no room */
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-title h1 { margin-bottom: 0; } /* the row handles the spacing now */
+
+/* Intro block: text on the left, photo on the right */
+.about-intro {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;  /* photo lines up with the top of the text  */
+}
+
+.about-photo {
+  width: 190px;
+  flex-shrink: 0;           /* don't let the text squeeze the photo     */
+  aspect-ratio: 4 / 5;      /* portrait shape                           */
+  object-fit: cover;        /* crop to fill that shape, never squash    */
+  object-position: center 100%; /* keep the bottom of the photo (the face) */
+  border: 1px solid var(--border);
+}
+
+/* Phones: stack the photo above the text instead of beside it */
+@media (max-width: 560px) {
+  .about-intro { flex-direction: column-reverse; gap: 1.5rem; }
+  .about-photo { width: 160px; }
+}
 
 /* ── FOOTER ──────────────────────────────────────────────────────────  */
 footer {
