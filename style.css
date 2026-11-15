@@ -54,14 +54,18 @@ header {
 }
 
 .logo {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-family: 'Courier New', Courier, monospace;
+  /* Monospace so eigeneddie::blog reads like code                      */
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.01em; /* tighten the letters slightly             */
 }
 
+.logo:hover { text-decoration: none; }
+/* The logo is a link, but we don't want it underlined on hover        */
+
 .logo span { color: var(--accent); }
-/* Colors just the & inside the logo teal                              */
+/* Colors just the :: inside the logo teal                             */
 
 nav { display: flex; gap: 1.5rem; }
 /* Puts nav links in a row with space between them                     */
@@ -69,6 +73,27 @@ nav { display: flex; gap: 1.5rem; }
 nav a { font-size: 0.85rem; color: var(--muted); }
 nav a:hover { color: var(--text); text-decoration: none; }
 /* Nav links are grey by default, white on hover — no underline        */
+
+nav a.active { color: var(--text); }
+/* The link for the page you're on stays white                         */
+
+/* ── BANNER ──────────────────────────────────────────────────────────
+   The photo strip under the header. The image file itself is 4:3, but
+   we show it as a wide strip and let CSS crop off the top and bottom.  */
+.banner {
+  display: block;          /* images are inline by default, which adds a
+                              small gap underneath; block removes it      */
+  width: 100%;             /* fill the 700px content column               */
+  aspect-ratio: 21 / 9;    /* banner shape: 21 wide for every 9 tall      */
+  object-fit: cover;       /* fill that shape by cropping, never squashing */
+  object-position: center 65%;
+  /* Which part of the photo stays visible when cropping.
+     First value = horizontal, second = vertical.
+     0% = keep the top, 100% = keep the bottom. 65% keeps the rig and
+     the tools on the floor. Tweak this number to reframe the shot.     */
+  border: 1px solid var(--border); /* thin outline, matches the site's divider lines */
+  margin-bottom: 2.5rem;   /* space before the hero heading               */
+}
 
 /* ── HERO ────────────────────────────────────────────────────────────  */
 .hero { margin-bottom: 3.5rem; }
@@ -88,7 +113,7 @@ nav a:hover { color: var(--text); text-decoration: none; }
 }
 
 /* ── SECTION LABEL ───────────────────────────────────────────────────
-   The small uppercase label above each section (PROJECTS, FIELD LOG) */
+   The small uppercase label above each section (e.g. POSTS) */
 .section-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -101,88 +126,71 @@ nav a:hover { color: var(--text); text-decoration: none; }
 
 section { margin-bottom: 3rem; }
 
-/* ── PROJECT CARDS ───────────────────────────────────────────────────  */
-.project {
-  border: 1px solid var(--border);  /* thin outline box                 */
-  padding: 1.25rem;
-  margin-bottom: 0.75rem;
-  transition: border-color 0.15s;   /* smooth color change on hover     */
+/* ── POST LIST ───────────────────────────────────────────────────────
+   Each post on the home page is one clickable row: date, title, summary */
+.post {
+  display: block;            /* links are inline by default; block makes
+                                the whole row clickable                 */
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border); /* divider line below each post */
+  color: var(--text);
 }
 
-.project:hover { border-color: var(--accent-dim); cursor: pointer; }
-/* On hover: border turns darker teal, cursor becomes a hand           */
+.post:first-of-type { border-top: 1px solid var(--border); }
+/* Top border only on the first post, so the list is fully boxed       */
 
-.project-top {
-  display: flex;
-  justify-content: space-between; /* name on left, status badge on right */
-  align-items: flex-start;
-  margin-bottom: 0.5rem;
-}
+.post:hover { text-decoration: none; }
+.post:hover .post-title { color: var(--accent); }
+/* On hover, no underline. The title turns teal instead               */
 
-.project-name { font-weight: 500; font-size: 0.95rem; }
-
-.project-status {
-  font-size: 0.7rem;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.08em;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--accent-dim); /* teal outline box              */
-  color: var(--accent);                /* teal text                     */
-}
-
-.project-status.planned {
-  /* When the badge also has class "planned", override to grey          */
-  border-color: #333;
-  color: var(--muted);
-}
-
-.project-desc {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
-}
-
-.project-tags {
-  font-family: 'Courier New', monospace;
-  font-size: 0.72rem;
-  color: var(--muted);
-  display: flex;       /* puts tags in a row                            */
-  flex-wrap: wrap;     /* wraps to next line if too many tags            */
-  gap: 0.5rem;
-}
-
-.project-tags span {
-  background: var(--surface); /* slightly lighter box behind each tag   */
-  padding: 0.1rem 0.4rem;
-}
-
-/* ── FIELD LOG ───────────────────────────────────────────────────────  */
-.log-entry {
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--border); /* divider line below each entry */
-}
-
-.log-entry:first-of-type { border-top: 1px solid var(--border); }
-/* Add a top border only to the first entry, so the list is fully boxed */
-
-.log-meta {
+.post-date {
+  display: block;            /* each part on its own line               */
   font-family: 'Courier New', monospace;
   font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 0.4rem;
-  display: flex;
-  gap: 1rem; /* space between date and project name                    */
+  color: var(--accent);
+  margin-bottom: 0.2rem;
 }
 
-.log-meta .date { color: var(--accent); } /* date is teal              */
-
-.log-title {
+.post-title {
+  display: block;
   font-size: 0.95rem;
   font-weight: 500;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.2rem;
+  transition: color 0.15s;   /* smooth color change on hover            */
 }
 
-.log-body { font-size: 0.875rem; color: var(--muted); }
+.post-summary {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.empty {
+  /* The "First post coming soon" placeholder                          */
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── ABOUT PAGE ──────────────────────────────────────────────────────  */
+.about h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.about h2 {
+  font-size: 0.7rem;               /* styled like the small section labels */
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-family: 'Courier New', monospace;
+  margin: 2rem 0 0.6rem;           /* space above, a little below          */
+}
+
+.about p { margin-bottom: 1rem; }  /* space between paragraphs            */
 
 /* ── FOOTER ──────────────────────────────────────────────────────────  */
 footer {
@@ -198,3 +206,93 @@ footer {
 
 footer a { color: var(--muted); }
 footer a:hover { color: var(--text); }
+
+/* ── POST PAGES ──────────────────────────────────────────────────────
+   Styles for posts/*.html, the full posts copied over from Substack.
+   The post text comes with Substack's own HTML, so some rules below
+   tidy up Substack-specific bits.                                     */
+.article-head { margin-bottom: 2rem; }
+
+.article-head h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.article-summary { color: var(--muted); font-size: 1rem; }
+
+/* The post text itself */
+.article-body { font-size: 1rem; line-height: 1.75; }
+
+.article-body p,
+.article-body ul,
+.article-body ol,
+.article-body blockquote,
+.article-body pre,
+.article-body figure { margin-bottom: 1.25rem; }
+
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 2rem 0 0.75rem;
+}
+.article-body h2 { font-size: 1.25rem; }
+.article-body h3 { font-size: 1.1rem; }
+
+.article-body ul,
+.article-body ol { padding-left: 1.5rem; }  /* indent bullet lists      */
+
+.article-body blockquote {
+  border-left: 2px solid var(--accent-dim); /* teal bar on the left     */
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.article-body pre {
+  background: var(--surface);
+  padding: 1rem;
+  overflow-x: auto;          /* long code lines scroll sideways instead
+                                of stretching the page                  */
+  font-size: 0.85rem;
+}
+
+.article-body code { font-family: 'Courier New', Courier, monospace; }
+
+.article-body img {
+  max-width: 100%;           /* never wider than the text column        */
+  height: auto;              /* keep the image's proportions            */
+  display: block;
+  margin: 0 auto;            /* center narrow images                    */
+}
+
+.article-body figcaption {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.article-body iframe { max-width: 100%; } /* embedded videos etc.       */
+
+/* Substack adds little "restack" and "expand image" buttons on top of
+   every image. They only work on Substack, so hide them here.         */
+.article-body .image-link-expand,
+.article-body button { display: none; }
+
+.article-foot {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}

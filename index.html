@@ -12,8 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Makes the page scale correctly on mobile. Without this, phones zoom out and show a tiny desktop view -->
 
-  <title>hacks & arts — Edgar Sutawika</title>
+  <title>eigeneddie::blog</title>
   <!-- Text shown in the browser tab -->
+
+  <meta name="description" content="Independent R&D notes by Edgar Sutawika: teardowns, experiments and builds on a budget." />
+  <!-- The summary Google and link previews show under the page title -->
 
   <link rel="stylesheet" href="style.css" />
   <!-- Loads the CSS file that controls all the visual styling -->
@@ -23,109 +26,61 @@
   <!-- Everything in <body> is what the user actually sees -->
 
   <!-- ── HEADER ───────────────────────────────────────────────────── -->
+  <!-- This header is copied into about.html too. If you change it here, change it there. -->
   <header>
-    <!-- The top bar: logo on the left, nav links on the right -->
-
-    <span class="logo">hacks<span>&amp;</span>arts</span>
-    <!-- class="logo" tells CSS to style this as the site name -->
-    <!-- &amp; is the HTML way to write & safely (raw & can confuse the parser) -->
-    <!-- The inner <span> wraps just the & so CSS can color it differently -->
+    <a class="logo" href="index.html">eigeneddie<span>::</span>blog</a>
+    <!-- The logo is a link back to the home page -->
+    <!-- The <span> wraps just the :: so CSS can color it teal -->
 
     <nav>
-      <!-- <nav> marks a navigation block — semantic, helps accessibility -->
-      <a href="#">projects</a>
-      <a href="#">log</a>
-      <a href="#">about</a>
-      <!-- href="#" is a placeholder link — replace # with the real URL or page path later -->
+      <a href="index.html" class="active">home</a>
+      <a href="about.html">about</a>
+      <!-- class="active" marks the page you're currently on (styled brighter in CSS).
+           On about.html, the class moves to the "about" link instead. -->
     </nav>
   </header>
 
+  <!-- ── BANNER ───────────────────────────────────────────────────── -->
+  <img class="banner" src="images/banner.jpg"
+       alt="A half-built rig on a workshop floor, surrounded by wires, a toolbox and a multimeter" />
+  <!-- <img> shows an image. It has no closing tag.
+       src = path to the image file, relative to this HTML file
+       alt = text description: read aloud by screen readers, and shown if the image fails to load
+       The cropping and sizing happen in style.css under .banner -->
+
   <!-- ── HERO ─────────────────────────────────────────────────────── -->
   <section class="hero">
-    <!-- The intro section at the top of the page -->
-
     <h1>Building projects with minimal resources.</h1>
     <!-- h1 = the most important heading on the page. Only use one per page -->
 
-    <p>MechE by training. Personal projects, documented as I go.</p>
-    <!-- <p> = paragraph. Plain body text -->
+    <p>Independent R&amp;D: teardowns, experiments and builds on a budget, documented as I go.</p>
+    <!-- &amp; is the HTML way to write & safely -->
   </section>
 
-  <!-- ── PROJECTS ──────────────────────────────────────────────────── -->
+  <!-- ── POSTS ────────────────────────────────────────────────────── -->
   <section>
-    <p class="section-label">Projects</p>
-    <!-- Small uppercase label above the section. Styled via .section-label in CSS -->
+    <p class="section-label">Posts</p>
 
-    <!-- Each project is a <div> — a generic container with no built-in meaning.
-         class="project" tells CSS how to style it (border, padding, etc.) -->
-    <div class="project">
-
-      <div class="project-top">
-        <!-- Row inside the card: project name on the left, status badge on the right -->
-        <span class="project-name">$3500 3D Printing Machine Teardown</span>
-        <span class="project-status">IN PROGRESS</span>
-        <!-- class="project-status" styles the badge. No extra class = active/teal style -->
-      </div>
-
-      <p class="project-desc">Looking closer inside an SLA printer. Galvo mirrors, laser driver, Z-axis, peel mechanism.</p>
-
-      <div class="project-tags">
-        <!-- Row of keyword tags. Each <span> is one tag -->
-        <span>teardown</span>
-        <span>SLA</span>
-        <span>galvanometer</span>
-        <span>reverse-eng</span>
-      </div>
-    </div>
-
-    <div class="project">
-      <div class="project-top">
-        <span class="project-name">Next Project</span>
-        <span class="project-status planned">PLANNED</span>
-        <!-- Adding class "planned" on top of "project-status" switches it to a muted grey style -->
-      </div>
-      <p class="project-desc">TBD — something constrained. Bare-metal firmware on minimal hardware.</p>
-    </div>
-
-  </section>
-
-  <!-- ── FIELD LOG ─────────────────────────────────────────────────── -->
-  <section>
-    <p class="section-label">Field Log</p>
-    <!-- Chronological updates — newest first -->
-
-    <div class="log-entry">
-      <!-- One log post. Add a new <div class="log-entry"> block for each update -->
-
-      <div class="log-meta">
-        <!-- The metadata row: date + project name, in monospace -->
-        <span class="date">2026-04-25</span>
-        <!-- class="date" turns this teal in CSS -->
-        <span>form2-teardown</span>
-        <!-- Which project this update belongs to -->
-      </div>
-
-      <p class="log-title">First look: initial disassembly</p>
-      <p class="log-body">Top cover off. Two galvo mirrors on a steel frame, laser module with collimating lens, custom driver board. Z-axis on a leadscrew with a NEMA 17. Peel motor sits below the resin tank.</p>
-    </div>
-
-    <div class="log-entry">
-      <div class="log-meta">
-        <span class="date">2026-04-20</span>
-        <span>form2-teardown</span>
-      </div>
-      <p class="log-title">Project started</p>
-      <p class="log-body">Starting the teardown and documenting everything.</p>
-    </div>
-
+    <!-- The posts below are filled in automatically from Substack by
+         scripts/update_posts.py. Don't edit between the START and END
+         markers: your changes get overwritten on the next update.
+         Each post is one <a class="post"> block, newest at the top. -->
+    <!-- POSTS:START -->
+    <a class="post" href="posts/thinking-out-loud-just-for-the-lols.html">
+      <span class="post-date">2026-11-14</span>
+      <span class="post-title">Thinking out loud just for the LOLs</span>
+      <span class="post-summary">A note on what I care about on my spare time</span>
+    </a>
+    <!-- POSTS:END -->
   </section>
 
   <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+  <!-- Also copied into about.html -->
   <footer>
     <span>edgar sutawika</span>
     <span>
-      <a href="#">github</a> · <a href="#">email</a>
-      <!-- Replace # with your actual GitHub URL and mailto: link when ready -->
+      <a href="https://github.com/eigeneddie">github</a> · <a href="#">email</a>
+      <!-- Replace # with mailto:you@example.com to make the email link work -->
     </span>
   </footer>
 

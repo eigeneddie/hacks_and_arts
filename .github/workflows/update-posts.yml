@@ -1,0 +1,46 @@
+# Keeps the Posts list on the home page in sync with Substack.
+#
+# GitHub reads any .yml file in .github/workflows/ as an automated job.
+# This one runs scripts/update_posts.py, and if any posts changed, it
+# commits the updated files (index.html, posts.json, posts/).
+# GitHub Pages then republishes the site.
+
+name: Update posts from Substack
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours (times are UTC)
+  workflow_dispatch:         # adds a "Run workflow" button in the Actions tab,
+                             # for when you just published and don't want to wait
+
+permissions:
+  contents: write   # allows the job to commit index.html
+  pages: write      # allows the job to ask GitHub Pages to rebuild
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repo's files
+        uses: actions/checkout@v4
+
+      - name: Pull posts from Substack
+        run: python3 scripts/update_posts.py
+
+      - name: Commit and publish if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Stage everything the script touches, including new post pages
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No new posts."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update posts from Substack"
+          git push
+          # Commits made by this bot don't always trigger a Pages rebuild,
+          # so ask for one explicitly
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

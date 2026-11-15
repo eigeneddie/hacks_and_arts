@@ -1,0 +1,5 @@
+# Files and folders git should ignore (never commit, never push).
+# One pattern per line. A trailing / means "this folder".
+
+# Personal notes, kept local only
+edgarsnotes/
