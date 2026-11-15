@@ -143,7 +143,7 @@ def render_post_page(p):
   </article>
 
   <footer>
-    <span>edgar sutawika</span>
+    <span>&copy; 2026 Edgar Sutawika</span>
   </footer>
 
 </body>

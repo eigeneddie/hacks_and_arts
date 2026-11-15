@@ -30,6 +30,12 @@ body {
   max-width: 700px;      /* content never stretches wider than 700px     */
   margin: 0 auto;        /* centers the content horizontally on wide screens */
   padding: 2.5rem 1.5rem;/* 2.5rem top/bottom, 1.5rem left/right breathing room */
+
+  /* These three lines keep the footer at the bottom of the window,
+     even when a page is too short to fill the screen:               */
+  min-height: 100vh;       /* body is at least as tall as the window (vh = viewport height) */
+  display: flex;
+  flex-direction: column;  /* stack the page's parts top to bottom   */
 }
 
 /* ── MONOSPACE ───────────────────────────────────────────────────────
@@ -274,11 +280,14 @@ section { margin-bottom: 3rem; }
 
 /* ── FOOTER ──────────────────────────────────────────────────────────  */
 footer {
-  margin-top: 3rem;
+  margin-top: auto;   /* soaks up all the leftover space above it, which
+                         pushes the footer to the bottom of the window.
+                         On long pages there's no leftover space, so it
+                         just sits after the content as normal.        */
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   display: flex;
-  justify-content: space-between; /* name on left, links on right       */
+  justify-content: center;  /* centers the text horizontally           */
   font-size: 0.8rem;
   color: var(--muted);
   font-family: 'Courier New', monospace;
