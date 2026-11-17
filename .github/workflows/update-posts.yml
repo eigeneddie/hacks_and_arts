@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get the repo's files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Pull posts from Substack
         run: python3 scripts/update_posts.py

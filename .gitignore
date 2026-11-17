@@ -3,3 +3,6 @@
 
 # Personal notes, kept local only
 edgarsnotes/
+
+# Python's cache of compiled scripts, rebuilt automatically
+__pycache__/

@@ -1,6 +1,6 @@
 > generated with AI, not reviewed yet
 
-# eigeneddie::blog
+# eigeneddie::studios
 
 Independent R&D notes by Edgar Sutawika: teardowns, experiments and builds on a budget, documented as I go.
 
@@ -8,7 +8,7 @@ Live at: [eigeneddie.com](https://eigeneddie.com)
 
 ## Pages
 
-- **Home** (`index.html`): banner, intro, and the list of posts (newest first)
+- **Home** (`index.html`): banner, intro, then the newest posts shown directly (long ones cut short with "Continue reading"). Older posts are on `page/2.html`, `page/3.html`, ... behind an "Older posts" link
 - **About** (`about.html`): who I am, what this is, how to reach me
 
 ## Stack
@@ -22,6 +22,7 @@ The one exception: the About page text is written in Markdown (`_includes/about.
 ```
 index.html         home page (Posts list is auto-filled from Substack)
 posts/             full post pages, generated from Substack
+page/              older-post pages (2, 3, ...), generated; only exists once there are more than 5 posts
 posts.json         record of every post, used to build the above
 about.html         about page (layout only)
 _includes/         about.md, author.md: the About page text, in Markdown
