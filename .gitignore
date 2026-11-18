@@ -6,3 +6,7 @@ edgarsnotes/
 
 # Python's cache of compiled scripts, rebuilt automatically
 __pycache__/
+
+# Gallery originals (any size). Only the resized copies in
+# images/gallery/ get committed. See scripts/resize_gallery.py
+images/gallery_og/

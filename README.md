@@ -28,6 +28,8 @@ about.html         about page (layout only)
 _includes/         about.md, author.md: the About page text, in Markdown
 style.css          all styling, shared by both pages
 images/banner.jpg  banner photo (resized for the web, ~190 KB)
+images/gallery_og/ photo originals for the gallery (gitignored, never uploaded)
+images/gallery/    web copies + thumb/ of the above, made by scripts/resize_gallery.py
 scripts/           update_posts.py: pulls posts from Substack into index.html
 .github/workflows/ update-posts.yml: runs that script every 6 hours
 CNAME              tells GitHub Pages to serve this repo at eigeneddie.com

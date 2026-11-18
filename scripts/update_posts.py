@@ -3,7 +3,8 @@ Copies your Substack posts onto the site.
 
 What it does, step by step:
   1. Download the Substack RSS feed (a machine-readable list of recent
-     posts, including the full text of free posts).
+     posts, including the full text of free posts). If Substack blocks the
+     request, as it does on GitHub's servers, get it through rss2json.com.
   2. Merge them into posts.json, the site's own record of every post.
      Substack's feed only lists the ~20 most recent posts, so keeping our
      own record means older posts never disappear from the site.
@@ -25,6 +26,7 @@ import json
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
@@ -60,25 +62,44 @@ NS = {"content": "http://purl.org/rss/1.0/modules/content/"}
 
 # ── 1. Read the feed ───────────────────────────────────────────────────
 
-def fetch_feed(url):
-    # Substack's bot filter rejects requests that don't look like a normal
-    # browser, especially from GitHub's servers. These headers are what a
-    # regular Chrome sends when it opens a feed.
-    req = urllib.request.Request(url, headers={
-        "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                       "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"),
-        "Accept": "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.5",
-        "Accept-Language": "en-US,en;q=0.9",
-    })
+BROWSER_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"),
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+
+def download(url):
+    req = urllib.request.Request(url, headers=BROWSER_HEADERS)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read()
+
+
+def get_feed_posts():
+    """Gets the posts, from Substack directly if it lets us, otherwise
+    through rss2json.com.
+
+    Why the detour: Substack's bot filter blocks GitHub's servers
+    (403 Forbidden), so the automatic 6-hourly run can't read the feed
+    directly. rss2json.com is a free service that fetches a public feed
+    for you and hands it back. Substack doesn't block rss2json, and
+    rss2json doesn't block GitHub. On your own PC the direct route works,
+    so the detour only kicks in on GitHub."""
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return resp.read()
+        return parse_feed(download(FEED_URL)), "Substack"
     except urllib.error.HTTPError as err:
-        if err.code == 403:
-            sys.exit("Substack refused the request (403 Forbidden). It's blocking "
-                     "this machine, not a bug in the script. Running "
-                     "python scripts/update_posts.py on your own PC still works.")
-        raise
+        if err.code != 403:
+            raise
+    print("Substack blocked the direct request (403). Trying rss2json.com instead.")
+    url = "https://api.rss2json.com/v1/api.json?" + urllib.parse.urlencode({"rss_url": FEED_URL})
+    try:
+        data = json.loads(download(url))
+    except (urllib.error.URLError, ValueError) as err:
+        sys.exit(f"rss2json.com didn't work either ({err}). "
+                 "Running python scripts/update_posts.py on your own PC still works.")
+    if data.get("status") != "ok":
+        sys.exit(f"rss2json.com couldn't read the feed: {data.get('message', data)}")
+    return parse_rss2json(data), "rss2json.com"
 
 
 def parse_feed(xml_bytes):
@@ -97,6 +118,24 @@ def parse_feed(xml_bytes):
             "summary": html.unescape(item.findtext("description") or "").strip(),
             "date": parsedate_to_datetime(item.findtext("pubDate")).strftime("%Y-%m-%d"),
             "body": item.findtext("content:encoded", default="", namespaces=NS),
+        })
+    return posts
+
+
+def parse_rss2json(data):
+    # Same fields as parse_feed, from rss2json's JSON version of the feed
+    posts = []
+    for item in data.get("items", []):
+        url = (item.get("link") or "").strip()
+        if not url:
+            continue
+        posts.append({
+            "url": url,
+            "slug": url.rstrip("/").rsplit("/", 1)[-1],
+            "title": html.unescape(item.get("title") or "Untitled").strip(),
+            "summary": html.unescape(item.get("description") or "").strip(),
+            "date": (item.get("pubDate") or "")[:10],  # "2026-11-14 21:33:56" -> "2026-11-14"
+            "body": item.get("content") or "",
         })
     return posts
 
@@ -133,6 +172,8 @@ def page_shell(title, content, prefix, head_extra=""):
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>{head_extra}
   <link rel="stylesheet" href="{prefix}style.css" />
+  <link rel="icon" href="{prefix}favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="{prefix}apple-touch-icon.png" />
 </head>
 <body>
 
@@ -360,11 +401,12 @@ def write_pages(posts):
 
 
 def main():
-    posts = merge(parse_feed(fetch_feed(FEED_URL)))
+    feed_posts, source = get_feed_posts()
+    posts = merge(feed_posts)
     RECORD.write_text(json.dumps(posts, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     write_post_pages(posts)
     write_pages(posts)
-    print(f"{len(posts)} posts on the site.")
+    print(f"{len(posts)} posts on the site (feed read from {source}).")
 
 
 if __name__ == "__main__":
